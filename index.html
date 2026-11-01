@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Nexora Collection | Premium Fashion Store</title>
+  <meta name="description"
+        content="Nexora Collection - Premium Fashion and Modern Style">
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+  <!-- =========================
+       HEADER / NAVBAR
+  ========================== -->
+  <header class="header">
+    <nav class="navbar">
+
+      <a href="index.html" class="logo">
+        NEXORA <span>COLLECTION</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#categories">Categories</a>
+        <a href="#shop">Shop</a>
+        <a href="#about">About</a>
+      </div>
+
+      <div class="nav-actions">
+
+        <button class="nav-icon" onclick="openWishlist()" aria-label="Wishlist">
+          ❤️
+          <span id="wishlistCount">0</span>
+        </button>
+
+        <button class="nav-icon" onclick="openCart()" aria-label="Shopping Cart">
+          🛒
+          <span id="cartCount">0</span>
+        </button>
+
+        <a href="login.html" class="login-btn">
+          Login
+        </a>
+
+      </div>
+
+    </nav>
+  </header>
+
+
+  <!-- =========================
+       HERO SECTION
+  ========================== -->
+  <main>
+
+    <section class="hero" id="home">
+
+      <div class="hero-overlay"></div>
+
+      <div class="hero-content">
+
+        <span class="premium-tag">
+          ✨ PREMIUM FASHION COLLECTION
+        </span>
+
+        <h1>
+          Discover Your
+          <span>Perfect Style</span>
+        </h1>
+
+        <p>
+          Explore premium fashion, modern styles, trending outfits
+          and exclusive collections at Nexora Collection.
+        </p>
+
+        <div class="hero-buttons">
+
+          <button
+            class="primary-btn"
+            onclick="document.getElementById('shop').scrollIntoView({behavior: 'smooth'})">
+            Shop Now →
+          </button>
+
+          <a
+            class="secondary-btn"
+            href="https://wa.me/918949561691?text=Hello%20Nexora%20Collection%2C%20I%20need%20help."
+            target="_blank"
+            rel="noopener">
+            WhatsApp Help
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         FEATURES
+    ========================== -->
+    <section class="features">
+
+      <div class="feature-card">
+        <div class="feature-icon">🚚</div>
+        <div>
+          <h3>Fast Delivery</h3>
+          <p>Quick and reliable delivery service.</p>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">💎</div>
+        <div>
+          <h3>Premium Quality</h3>
+          <p>Carefully selected quality products.</p>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <div>
+          <h3>Secure Shopping</h3>
+          <p>A safe and simple shopping experience.</p>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         CATEGORIES
+    ========================== -->
+    <section class="section" id="categories">
+
+      <div class="section-heading">
+        <span class="section-tag">COLLECTIONS</span>
+        <h2>Shop By Category</h2>
+        <p>Choose your favorite style and explore our collection.</p>
+      </div>
+
+      <div class="category-grid">
+
+        <button
+          class="category-card"
+          onclick="filterCategory('Men Fashion')">
+          <span>👕</span>
+          <strong>Men Fashion</strong>
+        </button>
+
+        <button
+          class="category-card"
+          onclick="filterCategory('Women Fashion')">
+          <span>👗</span>
+          <strong>Women Fashion</strong>
+        </button>
+
+        <button
+          class="category-card"
+          onclick="filterCategory('Shoes')">
+          <span>👟</span>
+          <strong>Shoes</strong>
+        </button>
+
+        <button
+          class="category-card"
+          onclick="filterCategory('Accessories')">
+          <span>👜</span>
+          <strong>Accessories</strong>
+        </button>
+
+        <button
+          class="category-card"
+          onclick="filterCategory('Premium Collection')">
+          <span>💎</span>
+          <strong>Premium</strong>
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         SHOP / PRODUCTS
+    ========================== -->
+    <section class="section shop-section" id="shop">
+
+      <div class="shop-header">
+
+        <div>
+          <span class="section-tag">OUR PRODUCTS</span>
+          <h2>Premium Collection</h2>
+          <p id="productCountText">
+            Explore our latest fashion products.
+          </p>
+        </div>
+
+        <div class="search-box">
+          <input
+            type="search"
+            id="searchInput"
+            placeholder="🔍 Search products..."
+            oninput="searchProducts()">
+        </div>
+
+      </div>
+
+
+      <!-- Category Filters -->
+      <div id="categoryFilters" class="filters">
+
+        <button
+          class="filter-btn active"
+          onclick="loadProducts()">
+          All Products
+        </button>
+
+      </div>
+
+
+      <!-- Products will load from Supabase -->
+      <div id="productList" class="product-grid">
+
+        <div class="loading-box">
+          <p>Loading premium collection...</p>
+        </div>
+
+      </div>
+
+
+      <!-- Load More -->
+      <div class="load-more-area">
+        <button
+          id="loadMoreBtn"
+          class="secondary-main-btn"
+          onclick="loadMoreProducts()">
+          Load More Products
+        </button>
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         ABOUT
+    ========================== -->
+    <section class="about-section" id="about">
+
+      <div class="about-content">
+
+        <span class="section-tag">ABOUT US</span>
+
+        <h2>Welcome to Nexora Collection</h2>
+
+        <p>
+          Nexora Collection is your destination for premium fashion,
+          modern style and quality products. We aim to provide a better,
+          stylish and easy shopping experience for everyone.
+        </p>
+
+        <a
+          href="https://wa.me/918949561691?text=Hello%20Nexora%20Collection%2C%20I%20want%20to%20know%20more."
+          target="_blank"
+          rel="noopener"
+          class="primary-btn">
+          Contact Us on WhatsApp
+        </a>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       CART DRAWER
+  ========================== -->
+  <aside id="cartDrawer" class="drawer">
+
+    <div class="drawer-header">
+      <h2>🛒 Your Cart</h2>
+
+      <button onclick="closeCart()" class="close-btn">
+        ✕
+      </button>
+    </div>
+
+    <div id="cartItems" class="drawer-items">
+      <p>Your cart is empty.</p>
+    </div>
+
+    <div class="cart-footer">
+
+      <div class="total-row">
+        <strong>Total</strong>
+        <strong id="cartTotal">₹0</strong>
+      </div>
+
+      <button
+        class="primary-btn full-width"
+        onclick="checkout()">
+        Proceed to Checkout
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- =========================
+       WISHLIST DRAWER
+  ========================== -->
+  <aside id="wishlistDrawer" class="drawer">
+
+    <div class="drawer-header">
+      <h2>❤️ Wishlist</h2>
+
+      <button onclick="closeWishlist()" class="close-btn">
+        ✕
+      </button>
+    </div>
+
+    <div id="wishlistItems" class="drawer-items">
+      <p>Your wishlist is empty.</p>
+    </div>
+
+  </aside>
+
+
+  <!-- =========================
+       PRODUCT DETAILS MODAL
+  ========================== -->
+  <div id="productModal" class="modal">
+
+    <div class="modal-box">
+
+      <button
+        class="close-modal"
+        onclick="closeProductModal()">
+        ✕
+      </button>
+
+      <div id="productDetails"></div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       CHECKOUT MODAL
+  ========================== -->
+  <div id="checkoutModal" class="modal">
+
+    <div class="modal-box checkout-box">
+
+      <button
+        class="close-modal"
+        onclick="closeCheckout()">
+        ✕
+      </button>
+
+      <h2>Checkout</h2>
+
+      <form id="checkoutForm">
+
+        <label>Full Name</label>
+        <input
+          id="customerName"
+          type="text"
+          placeholder="Enter your full name"
+          required>
+
+        <label>Phone Number</label>
+        <input
+          id="customerPhone"
+          type="tel"
+          placeholder="Enter your phone number"
+          required>
+
+        <label>Delivery Address</label>
+        <textarea
+          id="customerAddress"
+          placeholder="Enter complete address"
+          required></textarea>
+
+
+        <!-- PAYMENT METHOD -->
+
+        <label>Payment Method</label>
+
+        <select id="paymentMethod" required>
+
+          <option value="">Select Payment Method</option>
+
+          <option value="upi">
+            UPI (PhonePe / Google Pay / Paytm)
+          </option>
+
+          <option value="cod">
+            Cash on Delivery
+          </option>
+
+        </select>
+
+
+        <button
+          type="submit"
+          class="primary-btn full-width">
+          Place Order
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       WHATSAPP FLOATING BUTTON
+  ========================== -->
+  <a
+    href="https://wa.me/918949561691?text=Hello%20Nexora%20Collection%2C%20I%20need%20customer%20support."
+    target="_blank"
+    rel="noopener"
+    class="whatsapp-float"
+    aria-label="WhatsApp Customer Support">
+
+    💬 <span>WhatsApp Help</span>
+
+  </a>
+
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+  <footer>
+
+    <div class="footer-content">
+
+      <div>
+        <h2>NEXORA COLLECTION</h2>
+        <p>Premium Fashion • Modern Style • Better Shopping</p>
+      </div>
+
+      <div>
+        <h3>Customer Support</h3>
+        <p>WhatsApp: +91 8949561691</p>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 Nexora Collection. All Rights Reserved.</p>
+    </div>
+
+  </footer>
+
+
+  <!-- =========================
+       JAVASCRIPT FILES
+  ========================== -->
+
+  <script src="js/supabase.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
